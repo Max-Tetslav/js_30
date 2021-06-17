@@ -13,3 +13,23 @@ function debounce(func, wait = 20, immediate = true) {
         if (callNow) func.apply(context, args);
     };
 }
+
+const sliderImages = document.querySelectorAll(".slide-in");
+
+function checkSlide(e) {
+    sliderImages.forEach(sliderImage => {
+
+        const halfImg = (window.scrollY + window.innerHeight) - sliderImage.height / 2;
+        const imageBotton = (sliderImage.offsetTop + sliderImage.height);
+        const isHalfShown = sliderImage.offsetTop < halfImg;
+        const isNotScrolledPast = window.scrollY < imageBotton;
+
+        if (isHalfShown && isNotScrolledPast) {
+            sliderImage.classList.add('active');
+        } else {
+            sliderImage.classList.remove('active');
+        }
+    });
+}
+
+window.addEventListener('scroll', debounce(checkSlide));
